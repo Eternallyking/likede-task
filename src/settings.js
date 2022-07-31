@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'hrsaas',
+  title: 'likede',
 
   /**
    * @type {boolean} true | false
