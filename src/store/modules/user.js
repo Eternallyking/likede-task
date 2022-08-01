@@ -94,10 +94,26 @@
 //   mutations,
 //   actions
 // }
-
+import { login } from '@/api/user'
+import router from '@/router'
 export default {
   namespaced: true,
-  state: {},
-  mutations: {},
-  actions: {}
+  state: {
+    token: ''
+  },
+  getters: {},
+  mutations: {
+    setToken(state, payload) {
+      state.token = payload
+    }
+  },
+  actions: {
+    async getToken(context, payload) {
+      const res = await login(payload)
+      if (res.data.token) {
+        router.push('/')
+        context.commit('setToken', res.data.token)
+      }
+    }
+  }
 }
