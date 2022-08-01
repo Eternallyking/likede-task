@@ -94,14 +94,7 @@ export default {
         password: 'admin'
       },
       loginFromRules: {
-        loginName: [
-          { required: true, message: '请输入账号', trigger: 'blur' },
-          {
-            pattern: /^(?:(?:\+|00)86)?1[3-9]\d{9}$/,
-            message: '账号不正确',
-            trigger: 'blur'
-          }
-        ],
+        loginName: [{ required: true, message: '请输入账号', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
         code: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
       },
