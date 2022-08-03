@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Message } from 'element-ui'
 // import { MessageBox, Message } from 'element-ui'
 // import store from '@/store'
 // import { getToken } from '@/utils/auth'
@@ -9,6 +10,32 @@ const service = axios.create({
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })
+service.interceptors.request.use((config) => {
+  if (
+    config.url.includes('/user-service/user/imageCode/') ||
+    config.url == '/user-service/user/login'
+  )
+    return config
+  if (store.state.user.token) {
+    config.headers.Authorization = 'Bearer ' + store.state.user.token
+  }
+  return config
+})
+service.interceptors.response.use(
+  (res) => {
+    if (typeof res.data !== 'object') return res
+    const { data } = res
+    if (data.success) {
+      return data
+    }
+    Message.error(data.msg)
+    return Promise.reject(new Error(data.msg))
+  },
+  (error) => {
+    Message.error('系统异常')
+    return Promise.reject(error)
+  }
+)
 
 // // request interceptor
 // service.interceptors.request.use(

@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <div class="login-form">
-      <el-form :model="loginFrom" :rules="loginFromRules">
+      <el-form :model="loginFrom" :rules="loginFromRules" ref="loginForm">
         <!-- 图片 -->
         <img
           class="from-login"
@@ -70,7 +70,11 @@
         </el-form-item>
 
         <!-- 提交按钮 -->
-        <el-button class="login-btn" type="primary" @click="loginfn"
+        <el-button
+          class="login-btn"
+          type="primary"
+          @click="loginfn"
+          :loading="islogin"
           >登录</el-button
         >
       </el-form>
@@ -104,7 +108,8 @@ export default {
       },
       passwordtext: 'password',
       showVerificationcode: false,
-      img: ''
+      img: '',
+      islogin: false
     }
   },
 
@@ -128,8 +133,16 @@ export default {
         this.img = 'http://likede2-admin.itheima.net/likede' + res.config.url
       } catch (error) {}
     },
-    loginfn() {
-      this.$store.dispatch('user/getToken', this.loginFrom)
+    async loginfn() {
+      this.islogin = true
+      try {
+        await this.$refs.loginForm.validate()
+        await this.$store.dispatch('user/getToken', this.loginFrom)
+        this.$router.push('/')
+      } catch (error) {
+      } finally {
+        this.islogin = false
+      }
     }
   }
 }

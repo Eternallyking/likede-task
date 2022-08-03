@@ -95,25 +95,34 @@
 //   actions
 // }
 import { login } from '@/api/user'
-import router from '@/router'
+import { getUserInfoApi } from '@/api/user'
 export default {
   namespaced: true,
   state: {
-    token: ''
+    token: '',
+    userInfo: {},
+    regionId: ''
   },
   getters: {},
   mutations: {
     setToken(state, payload) {
-      state.token = payload
+      state.token = payload.token
+      state.regionId = payload.regionId
+    },
+    setUserInfo(state, payload) {
+      state.userInfo = payload
     }
   },
   actions: {
     async getToken(context, payload) {
       const res = await login(payload)
-      if (res.data.token) {
-        router.push('/')
-        context.commit('setToken', res.data.token)
-      }
+      console.log(res)
+      context.commit('setToken', res)
+    },
+    async getUserInfo(context, payload) {
+      const userInfo = await getUserInfoApi(restoken.regionId)
+      console.log(userInfo)
+      context.commit('setUserInfo', payload)
     }
   }
 }

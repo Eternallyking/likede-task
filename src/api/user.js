@@ -13,3 +13,9 @@ export function Verificationcode(num) {
     url: `/user-service/user/imageCode/${num}`
   })
 }
+
+export function getUserInfoApi(id) {
+  return request({
+    url: `/api/user-service/user/${id}`
+  })
+}
