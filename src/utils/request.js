@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 // import { MessageBox, Message } from 'element-ui'
-// import store from '@/store'
+import store from '@/store'
 // import { getToken } from '@/utils/auth'
 
 // create an axios instance
@@ -17,7 +17,7 @@ service.interceptors.request.use((config) => {
   )
     return config
   if (store.state.user.token) {
-    config.headers.Authorization = 'Bearer ' + store.state.user.token
+    config.headers.Authorization = store.state.user.token
   }
   return config
 })
@@ -25,10 +25,11 @@ service.interceptors.response.use(
   (res) => {
     if (typeof res.data !== 'object') return res
     const { data } = res
-    if (data.success) {
+    if (data.success || data.status) {
       return data
     }
-    Message.error(data.msg)
+    Message.error('系统异常')
+    console.log(data)
     return Promise.reject(new Error(data.msg))
   },
   (error) => {

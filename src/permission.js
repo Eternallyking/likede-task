@@ -63,20 +63,20 @@
 //   NProgress.done()
 // })
 
-// import router from '@/router'
-// import store from '@/store'
-// const whiteList = ['/login', '/404']
-// router.beforeEach((to, from, next) => {
-//   const token = store.state.user.token
-//   if (token) {
-//     if (!store.state.user.userInfo.userId) {
-//       store.dispatch('user/getUserInfo')
-//     }
-//     if (to.path === '/login') return next('/')
-//     next()
-//   } else {
-//     const iscludes = whiteList.includes(to.path)
-//     if (iscludes) return next()
-//     next('/login')
-//   }
-// })
+import router from '@/router'
+import store from '@/store'
+const whiteList = ['/login', '/404']
+router.beforeEach((to, from, next) => {
+  const token = store.state.user.token
+  if (token) {
+    if (!store.state.user.userInfo.userId) {
+      store.dispatch('user/getUserInfo', store.state.user.userId)
+    }
+    if (to.path === '/login') return next('/')
+    next()
+  } else {
+    const iscludes = whiteList.includes(to.path)
+    if (iscludes) return next()
+    next('/login')
+  }
+})

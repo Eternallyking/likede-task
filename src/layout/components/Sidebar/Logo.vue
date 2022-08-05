@@ -35,7 +35,7 @@ export default {
   width: 167px;
   height: 60px;
   line-height: 50px;
-  text-align: center;
+  // text-align: center;
   overflow: hidden;
 
   & .sidebar-logo-link {
@@ -44,9 +44,11 @@ export default {
 
     & .sidebar-logo {
       // width: 32px;
-      height: 35px;
+      // height: 35px;
+      width: 88px;
       vertical-align: middle;
-      margin-right: 50px;
+      margin-left: 15px;
+      margin-top: 4px;
     }
 
     & .sidebar-title {
@@ -60,6 +62,5 @@ export default {
       vertical-align: middle;
     }
   }
-
 }
 </style>

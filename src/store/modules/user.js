@@ -101,13 +101,13 @@ export default {
   state: {
     token: '',
     userInfo: {},
-    regionId: ''
+    userId: ''
   },
   getters: {},
   mutations: {
     setToken(state, payload) {
       state.token = payload.token
-      state.regionId = payload.regionId
+      state.userId = payload.userId
     },
     setUserInfo(state, payload) {
       state.userInfo = payload
@@ -116,13 +116,11 @@ export default {
   actions: {
     async getToken(context, payload) {
       const res = await login(payload)
-      console.log(res)
       context.commit('setToken', res)
     },
     async getUserInfo(context, payload) {
-      const userInfo = await getUserInfoApi(restoken.regionId)
-      console.log(userInfo)
-      context.commit('setUserInfo', payload)
+      const userInfo = await getUserInfoApi(payload)
+      context.commit('setUserInfo', userInfo)
     }
   }
 }

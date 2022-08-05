@@ -16,6 +16,6 @@ export function Verificationcode(num) {
 
 export function getUserInfoApi(id) {
   return request({
-    url: `/api/user-service/user/${id}`
+    url: `/user-service/user/${id}`
   })
 }

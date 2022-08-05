@@ -4,8 +4,19 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" />
-          <i class="el-icon-caret-bottom" />
+          <div class="user-avatar">
+            <img
+              :src="$store.state.user.userInfo.image + '1'"
+              v-imgError="defaultimg"
+            />
+          </div>
+          <div style="margin: 0 15px">
+            <span>欢迎您，{{ $store.state.user.userInfo.userName }}</span>
+          </div>
+          <div>
+            <span>退出</span>
+            <i class="el-icon-caret-bottom" />
+          </div>
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <router-link to="/">
@@ -37,8 +48,14 @@ import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import Logo from './Sidebar/Logo.vue'
+import defaultimg from '@/img/avatar.png'
 
 export default {
+  data() {
+    return {
+      defaultimg
+    }
+  },
   components: {
     Breadcrumb,
     Hamburger,
@@ -65,13 +82,11 @@ export default {
   width: 100%;
   overflow: hidden;
   position: fixed;
-  display: flex;
-  justify-items: center;
-  align-content: space-between;
+  z-index: 99;
   top: 0;
   left: 0;
-  // background: #fff;
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABwEAAAA8CAYAAACOysV5AAADG0lEQVR4nO3aR04DURBF0bYHhPWxFDbMLggDjIQEIjh0+O2uqn/OEt70vt3D49NhAAAA4Crub/fD3c3O2AAAAKxqb14AAIDreX59H17efDEBAABYlwgIAABwZUIgAAAAaxMBAQAANiAEAgAAsCYREAAAYCNCIAAAAGsRAQEAADYkBAIAALAGERAAAGBjQiAAAACtiYAAAAABCIEAAAC0JAICAAAEIQQCAADQiggIAAAQiBAIAABACyIgAABAMEIgAAAAS4mAAAAAAQmBAAAALCECAgAABCUEAgAAMJcICAAAEJgQCAAAwBwiIAAAQHBCIAAAAFOJgAAAAAkIgQAAAEwhAgIAACQhBAIAADCWCAgAAJCIEAgAAMAYIiAAAEAyQiAAAACXiIAAAAAJCYEAAACcIwICAAAkJQQCAABwiggIAACQmBAIAADAMSIgAABAckIgAAAAf4mAAAAABQiBAAAA/CQCAgAAFCEEAgAA8EUEBAAAKEQIBAAAYBABAQAA6hECAQAAEAEBAAAKEgIBAAD6JgICAAAUJQQCAAD0SwQEAAAoTAgEAADokwgIAABQnBAIAADQHxEQAACgA0IgAABAX0RAAACATgiBAAAA/RABAQAAOiIEAgAA9EEEBAAA6IwQCAAAUJ8ICAAA0CEhEAAAoDYREAAAoFNCIAAAQF0iIAAAQMeEQAAAgJpEQAAAgM4JgQAAAPWIgAAAAAiBAAAAxYiAAAAAfBICAQAA6hABAQAA+CYEAgAA1CACAgAA8IsQCAAAkJ8ICAAAwD9CIAAAQG4iIAAAAEcJgQAAAHmJgAAAAJwkBAIAAOQkAgIAAHCWEAgAAJCPCAgAAMBFQiAAAEAuIiAAAACjCIEAAAB5iIAAAACMJgQCAADkIAICAAAwiRAIAAAQnwgIAADAZEIgAABAbCIgAAAAswiBAAAAcYmAAAAAzCYEAgAAxCQCAgAAsIgQCAAAEI8ICAAAwGJCIAAAQCwiIAAAAE0IgQAAAHGIgAAAADQjBAIAAMQgAgIAANCUEAgAALA9ERAAAIDmhEAAAIANDcPwAWT/XbLChBneAAAAAElFTkSuQmCC);
+  background-size: cover;
+  background-image: url('~@/img/login.png');
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
   .hamburger-container {
@@ -88,11 +103,14 @@ export default {
   }
 
   .breadcrumb-container {
-    float: left;
+    // float: left;
   }
 
   .right-menu {
-    float: right;
+    position: absolute;
+    right: 0;
+    top: 0;
+    // float: right;
     height: 100%;
     line-height: 50px;
 
@@ -122,21 +140,31 @@ export default {
       margin-right: 30px;
 
       .avatar-wrapper {
-        margin-top: 5px;
-        position: relative;
+        // margin-top: 5px;
+        // position: relative;
+        display: flex;
+        justify-content: center;
+        line-height: 60px;
+        // height: 60px;
+        color: #fff;
 
         .user-avatar {
           cursor: pointer;
           width: 40px;
           height: 40px;
-          border-radius: 10px;
+          border-radius: 50%;
+          // margin-top: 10px;
+          img {
+            width: 100%;
+            margin-top: 10px;
+          }
         }
 
         .el-icon-caret-bottom {
           cursor: pointer;
-          position: absolute;
-          right: -20px;
-          top: 25px;
+          // position: absolute;
+          // right: -20px;
+          // top: 25px;
           font-size: 12px;
         }
       }

@@ -15,6 +15,12 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 
+import * as directives from '@/directives'
+
+for (let key in directives) {
+  Vue.directive(key, directives[key])
+}
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -40,5 +46,5 @@ new Vue({
   el: '#app',
   router,
   store,
-  render: h => h(App)
+  render: (h) => h(App)
 })
