@@ -94,8 +94,8 @@
 //   mutations,
 //   actions
 // }
-import { login } from '@/api/user'
-import { getUserInfoApi } from '@/api/user'
+import { login, getUserInfoApi } from '@/api/user'
+import { setTokenTime } from '@/utils/auth'
 export default {
   namespaced: true,
   state: {
@@ -117,10 +117,15 @@ export default {
     async getToken(context, payload) {
       const res = await login(payload)
       context.commit('setToken', res)
+      setTokenTime()
     },
     async getUserInfo(context, payload) {
       const userInfo = await getUserInfoApi(payload)
       context.commit('setUserInfo', userInfo)
+    },
+    logout(context) {
+      context.commit('setToken', '')
+      context.commit('setUserInfo', {})
     }
   }
 }

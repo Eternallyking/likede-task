@@ -5,14 +5,14 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
-import approvals from './modules/approvals'
-import attendances from './modules/attendances'
-import departments from './modules/departments'
-import employees from './modules/employees'
-import permission from './modules/permission'
-import salarys from './modules/salarys'
-import setting from './modules/setting'
-import social from './modules/social'
+import tickets from './modules/tickets'
+import points from './modules/points'
+import equipment from './modules/equipment'
+import personnel from './modules/personnel'
+import commodity from './modules/commodity'
+import tactics from './modules/tactics'
+import orders from './modules/orders'
+import reconciliation from './modules/reconciliation'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -70,14 +70,14 @@ export const constantRoutes = [
 ]
 
 export const asyncRoutes = [
-  approvals,
-  attendances,
-  departments,
-  employees,
-  permission,
-  salarys,
-  setting,
-  social
+  tickets,
+  points,
+  equipment,
+  personnel,
+  commodity,
+  tactics,
+  orders,
+  reconciliation
 ]
 
 const createRouter = () =>

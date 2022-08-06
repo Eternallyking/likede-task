@@ -3,6 +3,8 @@ import { Message } from 'element-ui'
 // import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 // import { getToken } from '@/utils/auth'
+import { getTokenTime } from './auth'
+import router from '@/router'
 
 // create an axios instance
 const service = axios.create({
@@ -10,30 +12,49 @@ const service = axios.create({
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })
-service.interceptors.request.use((config) => {
+function timetoken() {
+  const currentTime = Date.now()
+  const tokenTime = getTokenTime() - 0
+  const timeout = 2 * 60 * 60 * 1000
+  return currentTime - tokenTime > timeout
+}
+service.interceptors.request.use(async (config) => {
   if (
     config.url.includes('/user-service/user/imageCode/') ||
     config.url == '/user-service/user/login'
   )
     return config
   if (store.state.user.token) {
-    config.headers.Authorization = store.state.user.token
+    if (timetoken()) {
+      await store.dispatch('user/logout')
+      router.push('/login')
+      return Promise.reject(new Error('登录过期'))
+    } else {
+      config.headers.Authorization = store.state.user.token
+    }
   }
   return config
 })
 service.interceptors.response.use(
   (res) => {
+    console.log(res)
     if (typeof res.data !== 'object') return res
     const { data } = res
-    if (data.success || data.status) {
+    if (data.success || data.status || res.status === 200) {
       return data
     }
     Message.error('系统异常')
     console.log(data)
     return Promise.reject(new Error(data.msg))
   },
-  (error) => {
-    Message.error('系统异常')
+  async (error) => {
+    if (error?.response?.status === 401) {
+      await store.dispatch('user/logout')
+      router.push('/login')
+      Message.error('登录过期')
+    } else {
+      Message.error('系统异常')
+    }
     return Promise.reject(error)
   }
 )
